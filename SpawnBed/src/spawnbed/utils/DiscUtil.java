@@ -42,7 +42,7 @@ public class DiscUtil {
 			}
 
 			
-			File f = new File("plugins" + File.separator + "SpawnBed" + File.separator + "db" + File.separator + uuid + ".json");
+			File f = new File("plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" + File.separator + uuid + ".json");
 			if(!f.exists())
 				f.createNewFile();
 			
@@ -66,7 +66,7 @@ public class DiscUtil {
 		try {
 			
 			///If no file exists for the world, return null
-			File f = new File("plugins" + File.separator + "SpawnBed" + File.separator + "db" + File.separator + w.getUID() + ".json");
+			File f = new File("plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" + File.separator + w.getUID() + ".json");
 			if(!f.exists())
 				return null;
 				

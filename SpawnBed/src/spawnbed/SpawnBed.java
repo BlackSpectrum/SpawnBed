@@ -32,7 +32,7 @@ public class SpawnBed extends JavaPlugin{
 		
 		setUpConfig();
 		
-		new File("plugins" + File.separator + "SpawnBed" + File.separator + "db").mkdir();
+		new File("plugins" + File.separator + "BSPSpawnBed" + File.separator + "db").mkdir();
 		
 		for(World w : Bukkit.getWorlds())
 		{
