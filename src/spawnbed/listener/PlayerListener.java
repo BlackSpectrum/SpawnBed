@@ -1,7 +1,8 @@
-package spawnbed.listeners;
+package spawnbed.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -18,10 +19,10 @@ import com.massivecraft.factions.FPerm;
 import com.massivecraft.factions.entity.UPlayer;
 import com.massivecraft.mcore.ps.PS;
 
-import spawnbed.BedHead;
 import spawnbed.SpawnBed;
-import spawnbed.utils.DiscUtil;
-import spawnbed.utils.Util;
+import spawnbed.entity.BedHead;
+import spawnbed.util.DiscUtil;
+import spawnbed.util.Util;
 
 public class PlayerListener implements Listener{
 	
@@ -61,7 +62,13 @@ public class PlayerListener implements Listener{
 		{
 			if(owner.getUniqueId().equals(player.getUniqueId()))
 				if(isRightClick)
-					player.sendMessage(ChatColor.AQUA +"This is your SpawnBed.");
+				{
+					Location respawn = bed.getSpawnLocation();
+					if(respawn == null)
+						player.sendMessage(ChatColor.AQUA +"Your SpawnBed is buried.");
+					else
+						player.sendMessage(ChatColor.AQUA +"This is your SpawnBed.");
+				}
 				else
 				{
 					Util.removeBedFromMap(player, clickedBlock.getWorld().getUID());
@@ -125,7 +132,14 @@ public class PlayerListener implements Listener{
 			return;
 		}
 		
-		event.setRespawnLocation(bed.getLocation());
+		Location respawn = bed.getSpawnLocation();
+		if(respawn == null)
+		{
+			player.sendMessage(ChatColor.AQUA +"Your SpawnBed is buried.");
+			return;
+		}
+		
+		event.setRespawnLocation(respawn);
     }
 
 }

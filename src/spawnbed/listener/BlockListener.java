@@ -1,4 +1,4 @@
-package spawnbed.listeners;
+package spawnbed.listener;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,9 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import spawnbed.BedHead;
 import spawnbed.SpawnBed;
-import spawnbed.utils.Util;
+import spawnbed.entity.BedHead;
+import spawnbed.util.Util;
 
 public class BlockListener implements Listener{
 	

@@ -1,4 +1,4 @@
-package spawnbed.utils;
+package spawnbed.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import spawnbed.BedHead;
 import spawnbed.SpawnBed;
+import spawnbed.entity.BedHead;
 
 public class Util {
 	

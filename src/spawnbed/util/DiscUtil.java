@@ -1,4 +1,4 @@
-package spawnbed.utils;
+package spawnbed.util;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import spawnbed.BedHead;
+import spawnbed.entity.BedHead;
 
 public class DiscUtil {
 	

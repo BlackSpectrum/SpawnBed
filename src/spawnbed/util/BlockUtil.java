@@ -1,4 +1,4 @@
-package spawnbed.utils;
+package spawnbed.util;
 
 public class BlockUtil {
 

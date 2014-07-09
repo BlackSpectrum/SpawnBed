@@ -1,4 +1,4 @@
-package spawnbed;
+package spawnbed.entity;
 
 import org.json.simple.JSONArray;
 

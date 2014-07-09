@@ -1,4 +1,4 @@
-package spawnbed;
+package spawnbed.entity;
 
 import java.util.UUID;
 
@@ -79,6 +79,42 @@ public class BedHead {
 		return new Location(Bukkit.getWorld(worldUid), x, y, z);
 	}
 
+	public Location getSpawnLocation(boolean force)
+	{
+		///Gets the block above the feet of the bed
+		Block bedFeet = Bukkit.getWorld(worldUid).getBlockAt(x, y, z).getRelative(orientation.getOppositeFace()).getRelative(BlockFace.UP);
+		
+		if(force)
+			return bedFeet.getLocation().add(0.5d, 0, 0.5d);
+		
+		for(BlockFace face : new BlockFace[]{BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, 
+												BlockFace.SOUTH, BlockFace.SOUTH_EAST})
+		{
+			Block block = bedFeet.getRelative(face);
+			if(block.getType().isSolid())
+				continue;
+			
+			
+			if(!block.getRelative(BlockFace.DOWN).getType().isSolid())
+				return block.getLocation().add(0.5d, -0.5d, 0.5d);
+			
+			if(!block.getRelative(BlockFace.UP).getType().isSolid())
+				return block.getLocation().add(0.5d, 0, 0.5d);
+		}
+		
+		return null;	
+	}
+	
+	public Location getSpawnLocation()
+	{
+		return getSpawnLocation(false);
+	}
+	
+	public boolean isSpawnable()
+	{
+		return getSpawnLocation(false) != null;
+	}
+	
 
 	@Override
 	public int hashCode() {

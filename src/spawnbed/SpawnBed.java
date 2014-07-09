@@ -13,9 +13,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import spawnbed.listeners.BlockListener;
-import spawnbed.listeners.PlayerListener;
-import spawnbed.utils.DiscUtil;
+import spawnbed.entity.BedHead;
+import spawnbed.listener.BlockListener;
+import spawnbed.listener.PlayerListener;
+import spawnbed.util.DiscUtil;
 
 public class SpawnBed extends JavaPlugin{
 	
