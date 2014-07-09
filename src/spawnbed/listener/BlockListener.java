@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import spawnbed.SpawnBed;
@@ -74,6 +75,40 @@ public class BlockListener implements Listener{
 			///Remove bed
 			Util.removeBedFromMap(owner, bed.getWorldUid());
 		}			
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onLiquidFromTo(BlockFromToEvent event)
+	{
+		if(event.isCancelled())
+			return;
+		
+		if(!event.getBlock().isLiquid())
+			return;
+		
+		Block to = event.getToBlock();
+		
+		///If bed destroy and check if used by anyone
+		if(to.getType().equals(Material.BED_BLOCK))
+		{
+			
+			
+			///Create bed for that block
+			BedHead bed = new BedHead(to);
+			
+			///Find owner
+			Player owner = Util.getOwnerOfBed(bed);
+			
+			///If no owner end
+			if(owner == null)
+				return;
+			
+			///Remove bed
+			Util.removeBedFromMap(owner, bed.getWorldUid());
+			
+			to.breakNaturally();
+		}
+		
 	}
 
 }
