@@ -1,0 +1,4 @@
+name: BSPSpawnBed
+main: spawnbed.SpawnBed
+version: 0.1
+depend: [Factions]
