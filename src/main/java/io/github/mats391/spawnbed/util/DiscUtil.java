@@ -1,6 +1,6 @@
-package it.github.mats391.spawnbed.util;
+package io.github.mats391.spawnbed.util;
 
-import it.github.mats391.spawnbed.entity.BedHead;
+import io.github.mats391.spawnbed.entity.BedHead;
 
 import java.io.File;
 import java.io.FileReader;

@@ -1,8 +1,8 @@
-package it.github.mats391.spawnbed.listener;
+package io.github.mats391.spawnbed.listener;
 
-import it.github.mats391.spawnbed.SpawnBed;
-import it.github.mats391.spawnbed.entity.BedHead;
-import it.github.mats391.spawnbed.util.Util;
+import io.github.mats391.spawnbed.SpawnBed;
+import io.github.mats391.spawnbed.entity.BedHead;
+import io.github.mats391.spawnbed.util.Util;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

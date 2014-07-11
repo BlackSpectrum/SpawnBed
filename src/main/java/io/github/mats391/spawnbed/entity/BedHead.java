@@ -1,4 +1,4 @@
-package it.github.mats391.spawnbed.entity;
+package io.github.mats391.spawnbed.entity;
 
 import java.util.UUID;
 

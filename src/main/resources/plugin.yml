@@ -1,0 +1,5 @@
+name: BSP${project.name}
+main: ${project.groupId}.spawnbed.SpawnBed
+version: ${project.version}
+author: Mats391
+depend: [Factions]

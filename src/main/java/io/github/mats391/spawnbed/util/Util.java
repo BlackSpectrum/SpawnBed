@@ -1,7 +1,7 @@
-package it.github.mats391.spawnbed.util;
+package io.github.mats391.spawnbed.util;
 
-import it.github.mats391.spawnbed.SpawnBed;
-import it.github.mats391.spawnbed.entity.BedHead;
+import io.github.mats391.spawnbed.SpawnBed;
+import io.github.mats391.spawnbed.entity.BedHead;
 
 import java.util.HashMap;
 import java.util.Map;
