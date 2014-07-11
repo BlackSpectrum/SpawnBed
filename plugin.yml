@@ -1,4 +1,4 @@
 name: BSPSpawnBed
-main: spawnbed.SpawnBed
+main: io.github.mats391.spawnbed.SpawnBed
 version: 0.1
 depend: [Factions]
