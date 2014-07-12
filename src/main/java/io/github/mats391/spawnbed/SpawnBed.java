@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -21,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SpawnBed extends JavaPlugin
 {
 
-	public static final Logger					log				= Logger.getLogger( "Minecraft" );
+	public static String						pluginName;
 
 	// / Map<WorldName, Map<PlayerName, BedHead>>
 	public static Map<UUID, Map<UUID, BedHead>>	beds			= new HashMap<UUID, Map<UUID, BedHead>>();
@@ -38,6 +37,8 @@ public class SpawnBed extends JavaPlugin
 	public void onEnable() {
 
 		this.setUpConfig();
+
+		pluginName = this.getName();
 
 		new File( "plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" ).mkdir();
 

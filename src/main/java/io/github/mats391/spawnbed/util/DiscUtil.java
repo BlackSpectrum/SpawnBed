@@ -1,5 +1,6 @@
 package io.github.mats391.spawnbed.util;
 
+import io.github.mats391.spawnbed.SpawnBed;
 import io.github.mats391.spawnbed.entity.BedHead;
 
 import java.io.File;
@@ -19,13 +20,15 @@ import org.json.simple.parser.ParseException;
 public class DiscUtil
 {
 
+	private static final JSONParser	parser	= new JSONParser();
+
 	public static Map<UUID, BedHead> loadFromDisc( final World w ) {
 		JSONObject obj = null;
 		try
 		{
 
 			// /If no file exists for the world, return null
-			final File f = new File( "plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" + File.separator + w.getUID()
+			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + w.getUID()
 					+ ".json" );
 			if ( !f.exists() )
 				return null;
@@ -67,7 +70,8 @@ public class DiscUtil
 			for ( final UUID uid : m.keySet() )
 				obj.put( uid, m.get( uid ).toArray() );
 
-			final File f = new File( "plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" + File.separator + uuid + ".json" );
+			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + uuid
+					+ ".json" );
 			if ( !f.exists() )
 				f.createNewFile();
 
@@ -87,7 +91,5 @@ public class DiscUtil
 	public static void saveToDisc( final World w, final Map<UUID, BedHead> m ) {
 		saveToDisc( w.getUID(), m );
 	}
-
-	private static final JSONParser	parser	= new JSONParser();
 
 }
