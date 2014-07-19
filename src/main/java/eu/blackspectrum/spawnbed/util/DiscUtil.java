@@ -1,7 +1,4 @@
-package io.github.mats391.spawnbed.util;
-
-import io.github.mats391.spawnbed.SpawnBed;
-import io.github.mats391.spawnbed.entity.BedHead;
+package eu.blackspectrum.spawnbed.util;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,24 +8,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import eu.blackspectrum.spawnbed.SpawnBed;
+import eu.blackspectrum.spawnbed.entity.BedHead;
 
 public class DiscUtil
 {
 
 	private static final JSONParser	parser	= new JSONParser();
 
-	public static Map<UUID, BedHead> loadFromDisc( final World w ) {
+	public static Map<UUID, BedHead> loadFromDisc() {
 		JSONObject obj = null;
 		try
 		{
 
 			// /If no file exists for the world, return null
-			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + w.getUID()
+			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + "beds"
 					+ ".json" );
 			if ( !f.exists() )
 				return null;
@@ -49,7 +48,7 @@ public class DiscUtil
 		final Map<UUID, BedHead> ret = new HashMap<UUID, BedHead>();
 
 		for ( final Object o : obj.keySet() )
-			ret.put( UUID.fromString( (String) o ), new BedHead( (JSONArray) obj.get( o ), w ) );
+			ret.put( UUID.fromString( (String) o ), new BedHead( (JSONArray) obj.get( o ) ) );
 
 		if ( ret.size() > 0 )
 			return ret;
@@ -59,7 +58,7 @@ public class DiscUtil
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void saveToDisc( final UUID uuid, final Map<UUID, BedHead> m ) {
+	public static void saveToDisc( final Map<UUID, BedHead> m ) {
 
 		if ( m == null )
 			return;
@@ -70,7 +69,7 @@ public class DiscUtil
 			for ( final UUID uid : m.keySet() )
 				obj.put( uid, m.get( uid ).toArray() );
 
-			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + uuid
+			final File f = new File( "plugins" + File.separator + SpawnBed.pluginName + File.separator + "db" + File.separator + "beds"
 					+ ".json" );
 			if ( !f.exists() )
 				f.createNewFile();
@@ -86,10 +85,6 @@ public class DiscUtil
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public static void saveToDisc( final World w, final Map<UUID, BedHead> m ) {
-		saveToDisc( w.getUID(), m );
 	}
 
 }

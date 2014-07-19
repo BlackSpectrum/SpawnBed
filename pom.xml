@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.github.mats391</groupId>
+	<groupId>eu.blackspectrum</groupId>
 	<artifactId>SpawnBed</artifactId>
 	<version>1.0</version>
 	<name>SpawnBed</name>
@@ -49,4 +49,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<url>http://blackspectrum.eu/</url>
 </project>

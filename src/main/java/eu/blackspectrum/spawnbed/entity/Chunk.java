@@ -1,4 +1,4 @@
-package io.github.mats391.spawnbed.entity;
+package eu.blackspectrum.spawnbed.entity;
 
 import org.json.simple.JSONArray;
 

@@ -1,8 +1,4 @@
-package io.github.mats391.spawnbed.listener;
-
-import io.github.mats391.spawnbed.SpawnBed;
-import io.github.mats391.spawnbed.entity.BedHead;
-import io.github.mats391.spawnbed.util.Util;
+package eu.blackspectrum.spawnbed.listener;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,6 +10,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
+import eu.blackspectrum.spawnbed.SpawnBed;
+import eu.blackspectrum.spawnbed.entity.BedHead;
+import eu.blackspectrum.spawnbed.util.Util;
+
 public class BlockListener implements Listener
 {
 
@@ -24,25 +24,26 @@ public class BlockListener implements Listener
 
 		final Block block = event.getBlock();
 
-		// /Only consider BED_BLOCK
+		// Only consider BED_BLOCK
 		if ( !block.getType().equals( Material.BED_BLOCK ) )
 			return;
 
-		if ( SpawnBed.excludedWorlds.contains( block.getLocation().getWorld().getUID() ) )
+		// Only blocks in overworld
+		if ( !block.getWorld().equals( SpawnBed.overWorld ) )
 			return;
 
-		// /Create bed for that block
+		// Create bed for that block
 		final BedHead bed = new BedHead( block );
 
-		// /Find owner
+		// Find owner
 		final Player owner = Util.getOwnerOfBed( bed );
 
-		// /If no owner end
+		// If no owner end
 		if ( owner == null )
 			return;
 
-		// /Remove bed
-		Util.removeBedFromMap( owner, bed.getWorldUid() );
+		// Remove bed
+		Util.removeBedFromMap( owner );
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -53,25 +54,17 @@ public class BlockListener implements Listener
 		if ( SpawnBed.excludedWorlds.contains( event.getLocation().getWorld().getUID() ) )
 			return;
 
-		// /Iterate all destroyed blocks
+		// Iterate all destroyed blocks
 		for ( final Block block : event.blockList() )
 		{
-			// /Only consider BED_BLOCK
+			// Only consider BED_BLOCK
 			if ( !block.getType().equals( Material.BED_BLOCK ) )
 				continue;
 
-			// /Create bed for that block
+			// Create bed for that block
 			final BedHead bed = new BedHead( block );
 
-			// /Find owner
-			final Player owner = Util.getOwnerOfBed( bed );
-
-			// /If no owner continue
-			if ( owner == null )
-				continue;
-
-			// /Remove bed
-			Util.removeBedFromMap( owner, bed.getWorldUid() );
+			Util.checkOwnerAndRemove( bed );
 		}
 	}
 
@@ -92,15 +85,7 @@ public class BlockListener implements Listener
 			// /Create bed for that block
 			final BedHead bed = new BedHead( to );
 
-			// /Find owner
-			final Player owner = Util.getOwnerOfBed( bed );
-
-			// /If no owner end
-			if ( owner == null )
-				return;
-
-			// /Remove bed
-			Util.removeBedFromMap( owner, bed.getWorldUid() );
+			Util.checkOwnerAndRemove( bed );
 
 			to.breakNaturally();
 		}
