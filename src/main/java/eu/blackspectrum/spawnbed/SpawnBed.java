@@ -11,13 +11,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.blackspectrum.spawnbed.entity.BedHead;
-import eu.blackspectrum.spawnbed.listener.BlockListener;
-import eu.blackspectrum.spawnbed.listener.PlayerListener;
+import eu.blackspectrum.spawnbed.entities.BedHead;
+import eu.blackspectrum.spawnbed.listeners.BlockListener;
+import eu.blackspectrum.spawnbed.listeners.PlayerListener;
 import eu.blackspectrum.spawnbed.util.DiscUtil;
 
 public class SpawnBed extends JavaPlugin
 {
+
 
 	public static String				pluginName;
 
@@ -26,10 +27,16 @@ public class SpawnBed extends JavaPlugin
 	public static FileConfiguration		config;
 	public static World					overWorld;
 
+
+
+
 	@Override
 	public void onDisable() {
 		DiscUtil.saveToDisc( beds );
 	}
+
+
+
 
 	@Override
 	public void onEnable() {
@@ -37,11 +44,11 @@ public class SpawnBed extends JavaPlugin
 		this.setUpConfig();
 
 		pluginName = this.getName();
-		overWorld = getServer().getWorld( config.getString( "overWorld" ) );
+		overWorld = this.getServer().getWorld( config.getString( "overWorld" ) );
 
 		new File( "plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" ).mkdir();
 
-		Map<UUID, BedHead> loaded = DiscUtil.loadFromDisc();
+		final Map<UUID, BedHead> loaded = DiscUtil.loadFromDisc();
 		if ( loaded != null )
 			beds.putAll( loaded );
 
@@ -49,6 +56,9 @@ public class SpawnBed extends JavaPlugin
 		pm.registerEvents( new PlayerListener(), this );
 		pm.registerEvents( new BlockListener(), this );
 	}
+
+
+
 
 	private void setUpConfig() {
 		config = this.getConfig();

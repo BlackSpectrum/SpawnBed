@@ -14,12 +14,16 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
-import eu.blackspectrum.spawnbed.entity.BedHead;
+import eu.blackspectrum.spawnbed.entities.BedHead;
 
 public class DiscUtil
 {
 
+
 	private static final JSONParser	parser	= new JSONParser();
+
+
+
 
 	public static Map<UUID, BedHead> loadFromDisc() {
 		JSONObject obj = null;
@@ -56,6 +60,9 @@ public class DiscUtil
 			return null;
 
 	}
+
+
+
 
 	@SuppressWarnings("unchecked")
 	public static void saveToDisc( final Map<UUID, BedHead> m ) {

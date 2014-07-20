@@ -1,4 +1,4 @@
-package eu.blackspectrum.spawnbed.listener;
+package eu.blackspectrum.spawnbed.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,11 +11,12 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
-import eu.blackspectrum.spawnbed.entity.BedHead;
+import eu.blackspectrum.spawnbed.entities.BedHead;
 import eu.blackspectrum.spawnbed.util.Util;
 
 public class BlockListener implements Listener
 {
+
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockBreak( final BlockBreakEvent event ) {
@@ -46,6 +47,9 @@ public class BlockListener implements Listener
 		Util.removeBedFromMap( owner );
 	}
 
+
+
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityExplode( final EntityExplodeEvent event ) {
 		if ( event.isCancelled() )
@@ -67,6 +71,9 @@ public class BlockListener implements Listener
 			Util.checkOwnerAndRemove( bed );
 		}
 	}
+
+
+
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onLiquidFromTo( final BlockFromToEvent event ) {

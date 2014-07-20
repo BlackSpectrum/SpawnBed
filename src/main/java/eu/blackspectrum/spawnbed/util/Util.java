@@ -7,12 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
-import eu.blackspectrum.spawnbed.entity.BedHead;
+import eu.blackspectrum.spawnbed.entities.BedHead;
 
 public class Util
 {
 
-	public static void addBedToMap( final Player player, final BedHead bed, boolean verbose ) {
+
+	public static void addBedToMap( final Player player, final BedHead bed, final boolean verbose ) {
 
 		SpawnBed.beds.put( player.getUniqueId(), bed );
 		DiscUtil.saveToDisc( SpawnBed.beds );
@@ -22,15 +23,36 @@ public class Util
 
 	}
 
-	public static BedHead getBed( final Player player, boolean verbose ) {
 
-		BedHead retBedHead = SpawnBed.beds.get( player.getUniqueId() );
+
+
+	public static boolean checkOwnerAndRemove( final BedHead bed ) {
+		final Player owner = getOwnerOfBed( bed );
+
+		if ( owner != null )
+		{
+			removeBedFromMap( owner );
+			return true;
+		}
+		else
+			return false;
+	}
+
+
+
+
+	public static BedHead getBed( final Player player, final boolean verbose ) {
+
+		final BedHead retBedHead = SpawnBed.beds.get( player.getUniqueId() );
 
 		if ( verbose && retBedHead == null )
 			player.sendMessage( ChatColor.AQUA + "You have no Spawnbed." );
 
 		return retBedHead;
 	}
+
+
+
 
 	public static Player getOwnerOfBed( final BedHead bed ) {
 
@@ -40,6 +62,9 @@ public class Util
 
 		return null;
 	}
+
+
+
 
 	public static boolean removeBedFromMap( final Player player ) {
 		final UUID playerUid = player.getUniqueId();
@@ -52,19 +77,5 @@ public class Util
 		}
 		else
 			return false;
-	}
-
-	public static boolean checkOwnerAndRemove( BedHead bed ) {
-		Player owner = getOwnerOfBed( bed );
-
-		if ( owner != null )
-		{
-			removeBedFromMap( owner );
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 }

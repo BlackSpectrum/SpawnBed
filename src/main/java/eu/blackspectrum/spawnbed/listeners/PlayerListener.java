@@ -1,4 +1,4 @@
-package eu.blackspectrum.spawnbed.listener;
+package eu.blackspectrum.spawnbed.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,11 +15,12 @@ import com.massivecraft.factions.entity.UPlayer;
 import com.massivecraft.mcore.ps.PS;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
-import eu.blackspectrum.spawnbed.entity.BedHead;
+import eu.blackspectrum.spawnbed.entities.BedHead;
 import eu.blackspectrum.spawnbed.util.Util;
 
 public class PlayerListener implements Listener
 {
+
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract( final PlayerInteractEvent event ) {

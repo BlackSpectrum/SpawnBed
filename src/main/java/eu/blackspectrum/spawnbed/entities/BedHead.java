@@ -1,4 +1,4 @@
-package eu.blackspectrum.spawnbed.entity;
+package eu.blackspectrum.spawnbed.entities;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -18,8 +18,12 @@ import eu.blackspectrum.spawnbed.util.Util;
 public class BedHead
 {
 
+
 	private final int		x, y, z;
 	private final BlockFace	orientation;
+
+
+
 
 	public BedHead(Block block) {
 		final Bed bed = (Bed) block.getState().getData();
@@ -32,6 +36,9 @@ public class BedHead
 		this.orientation = bed.getFacing();
 	}
 
+
+
+
 	public BedHead(final JSONArray arr) {
 		this.x = ( (Long) arr.get( 0 ) ).intValue();
 		this.y = ( (Long) arr.get( 1 ) ).intValue();
@@ -39,37 +46,52 @@ public class BedHead
 		this.orientation = BlockFace.valueOf( (String) arr.get( 3 ) );
 	}
 
+
+
+
 	@Override
-	public boolean equals( Object obj ) {
+	public boolean equals( final Object obj ) {
 		if ( this == obj )
 			return true;
 		if ( obj == null )
 			return false;
-		if ( getClass() != obj.getClass() )
+		if ( this.getClass() != obj.getClass() )
 			return false;
-		BedHead other = (BedHead) obj;
-		if ( orientation != other.orientation )
+		final BedHead other = (BedHead) obj;
+		if ( this.orientation != other.orientation )
 			return false;
-		if ( x != other.x )
+		if ( this.x != other.x )
 			return false;
-		if ( y != other.y )
+		if ( this.y != other.y )
 			return false;
-		if ( z != other.z )
+		if ( this.z != other.z )
 			return false;
 		return true;
 	}
+
+
+
 
 	public Location getLocation() {
 		return new Location( SpawnBed.overWorld, this.x, this.y, this.z );
 	}
 
+
+
+
 	public BlockFace getOrientation() {
 		return this.orientation;
 	}
 
+
+
+
 	public Location getSpawnLocation() {
 		return this.getSpawnLocation( false );
 	}
+
+
+
 
 	public Location getSpawnLocation( final boolean force ) {
 		// /Gets the block above the feet of the bed
@@ -96,50 +118,63 @@ public class BedHead
 		return null;
 	}
 
+
+
+
 	public int getX() {
 		return this.x;
 	}
+
+
+
 
 	public int getY() {
 		return this.y;
 	}
 
+
+
+
 	public int getZ() {
 		return this.z;
 	}
+
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ( ( orientation == null ) ? 0 : orientation.hashCode() );
-		result = prime * result + x;
-		result = prime * result + y;
-		result = prime * result + z;
+		result = prime * result + ( this.orientation == null ? 0 : this.orientation.hashCode() );
+		result = prime * result + this.x;
+		result = prime * result + this.y;
+		result = prime * result + this.z;
 		return result;
 	}
 
+
+
+
 	/**
-	 * 
+	 *
 	 * @param player
 	 *            Player of this SpawnBed
 	 * @param verbose
 	 *            Should the player be notified?
 	 * @return true if spawnable
 	 */
-	public boolean isSpawnable( Player player, boolean verbose ) {
+	public boolean isSpawnable( final Player player, final boolean verbose ) {
 
-		if ( getSpawnLocation() == null )
+		if ( this.getSpawnLocation() == null )
 		{
 			if ( verbose )
-			{
 				player.sendMessage( ChatColor.AQUA + "Your SpawnBed is buried." );
-			}
 			return false;
 		}
 		final UPlayer uplayer = UPlayer.get( player );
 
-		if ( !FPerm.BUILD.has( uplayer, PS.valueOf( getLocation() ), false ) )
+		if ( !FPerm.BUILD.has( uplayer, PS.valueOf( this.getLocation() ), false ) )
 		{
 			if ( verbose )
 				player.sendMessage( ChatColor.AQUA + "Your SpawnBed is no longer in territory, where you can build in." );
@@ -150,6 +185,9 @@ public class BedHead
 
 		return true;
 	}
+
+
+
 
 	@SuppressWarnings("unchecked")
 	public JSONArray toArray() {
