@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 
 import com.massivecraft.factions.FPerm;
 import com.massivecraft.factions.entity.UPlayer;
-import com.massivecraft.mcore.ps.PS;
+import com.massivecraft.massivecore.ps.PS;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
 import eu.blackspectrum.spawnbed.util.Util;

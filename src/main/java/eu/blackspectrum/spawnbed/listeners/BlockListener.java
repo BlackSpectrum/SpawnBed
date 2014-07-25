@@ -55,7 +55,7 @@ public class BlockListener implements Listener
 		if ( event.isCancelled() )
 			return;
 
-		if ( SpawnBed.excludedWorlds.contains( event.getLocation().getWorld().getUID() ) )
+		if ( SpawnBed.overWorld.getUID().equals( event.getLocation().getWorld().getUID() ) )
 			return;
 
 		// Iterate all destroyed blocks

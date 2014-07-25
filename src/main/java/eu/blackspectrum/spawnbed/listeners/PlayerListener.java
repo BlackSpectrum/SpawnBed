@@ -3,16 +3,23 @@ package eu.blackspectrum.spawnbed.listeners;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 import com.massivecraft.factions.FPerm;
 import com.massivecraft.factions.entity.UPlayer;
-import com.massivecraft.mcore.ps.PS;
+import com.massivecraft.massivecore.ps.PS;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
 import eu.blackspectrum.spawnbed.entities.BedHead;
@@ -20,6 +27,68 @@ import eu.blackspectrum.spawnbed.util.Util;
 
 public class PlayerListener implements Listener
 {
+
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onEntityDamage( final EntityDamageEvent event ) {
+		if ( event.isCancelled() )
+			return;
+		
+		Entity victim = event.getEntity();
+
+		if ( !victim.getType().equals( EntityType.PLAYER ) )
+			return;
+
+		for ( final MetadataValue m : victim.getMetadata( "protectionTime" ) )
+			if ( m.getOwningPlugin().equals( SpawnBed.instance ) )
+			{
+				if ( System.currentTimeMillis() <= m.asLong() )
+					event.setDamage( event.getDamage() * SpawnBed.config.getDouble( "SpawnSafe.damageToProtected" ) );
+				else
+					victim.removeMetadata( "protectionTime", SpawnBed.instance );
+				return;
+			}
+	}
+
+
+
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onEntityDamageByEntity( final EntityDamageByEntityEvent event ) {
+
+		if ( event.isCancelled() )
+			return;
+
+		Entity attacker = event.getDamager();
+
+		if ( !event.getEntity().getType().equals( EntityType.PLAYER ) || !attacker.getType().equals( EntityType.PLAYER ) )
+			return;
+
+		for ( final MetadataValue m : attacker.getMetadata( "protectionTime" ) )
+			if ( m.getOwningPlugin().equals( SpawnBed.instance ) )
+			{
+				if ( System.currentTimeMillis() <= m.asLong() )
+					event.setDamage( event.getDamage() * SpawnBed.config.getDouble( "SpawnSafe.damageByProtected" ) );
+				else
+					attacker.removeMetadata( "protectionTime", SpawnBed.instance );
+				return;
+			}
+	}
+
+
+
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerChangedWorld( final PlayerChangedWorldEvent event ) {
+		final Player player = event.getPlayer();
+
+		player.setMetadata(
+				"protectionTime",
+				new FixedMetadataValue( SpawnBed.instance, System.currentTimeMillis()
+						+ SpawnBed.config.getDouble( "SpawnSafe.protectionTime" ) * 1000 ) );
+	}
+
+
 
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -79,7 +148,6 @@ public class PlayerListener implements Listener
 
 		// Add bed to the map
 		Util.addBedToMap( player, bed, true );
-
 	}
 
 }
