@@ -1,8 +1,8 @@
 package eu.blackspectrum.spawnbed.listeners;
 
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,7 +26,7 @@ public class BlockListener implements Listener
 		final Block block = event.getBlock();
 
 		// Only consider BED_BLOCK
-		if ( !block.getType().equals( Material.BED_BLOCK ) )
+		if ( block.getType() != Material.BED_BLOCK )
 			return;
 
 		// Only blocks in overworld
@@ -37,7 +37,7 @@ public class BlockListener implements Listener
 		final BedHead bed = new BedHead( block );
 
 		// Find owner
-		final Player owner = Util.getOwnerOfBed( bed );
+		final OfflinePlayer owner = Util.getOwnerOfBed( bed );
 
 		// If no owner end
 		if ( owner == null )
@@ -55,14 +55,14 @@ public class BlockListener implements Listener
 		if ( event.isCancelled() )
 			return;
 
-		if ( SpawnBed.overWorld.getUID().equals( event.getLocation().getWorld().getUID() ) )
+		if ( SpawnBed.overWorld.equals( event.getLocation().getWorld() ) )
 			return;
 
 		// Iterate all destroyed blocks
 		for ( final Block block : event.blockList() )
 		{
 			// Only consider BED_BLOCK
-			if ( !block.getType().equals( Material.BED_BLOCK ) )
+			if ( block.getType() != Material.BED_BLOCK )
 				continue;
 
 			// Create bed for that block

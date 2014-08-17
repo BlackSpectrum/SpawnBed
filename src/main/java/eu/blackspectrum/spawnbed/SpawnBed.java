@@ -22,11 +22,11 @@ public class SpawnBed extends JavaPlugin
 
 	public static String				pluginName;
 
-	public static Map<UUID, BedHead>	beds			= new HashMap<UUID, BedHead>();
+	public static Map<UUID, BedHead>	beds	= new HashMap<UUID, BedHead>();
 	public static FileConfiguration		config;
 	public static World					overWorld;
-	
-	public static Plugin instance;
+
+	public static Plugin				instance;
 
 
 
@@ -48,7 +48,7 @@ public class SpawnBed extends JavaPlugin
 		overWorld = this.getServer().getWorld( "world" );
 		instance = this;
 
-		new File( "plugins" + File.separator + "BSPSpawnBed" + File.separator + "db" ).mkdir();
+		new File( "plugins" + File.separator + pluginName + File.separator + "db" ).mkdir();
 
 		final Map<UUID, BedHead> loaded = DiscUtil.loadFromDisc();
 		if ( loaded != null )

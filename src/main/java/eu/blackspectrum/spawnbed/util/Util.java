@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import eu.blackspectrum.spawnbed.SpawnBed;
@@ -27,7 +28,7 @@ public class Util
 
 
 	public static boolean checkOwnerAndRemove( final BedHead bed ) {
-		final Player owner = getOwnerOfBed( bed );
+		final OfflinePlayer owner = getOwnerOfBed( bed );
 
 		if ( owner != null )
 		{
@@ -54,11 +55,17 @@ public class Util
 
 
 
-	public static Player getOwnerOfBed( final BedHead bed ) {
+	public static OfflinePlayer getOwnerOfBed( final BedHead bed ) {
 
 		for ( final UUID u : SpawnBed.beds.keySet() )
 			if ( SpawnBed.beds.get( u ).equals( bed ) )
-				return Bukkit.getServer().getPlayer( u );
+			{
+				OfflinePlayer p = Bukkit.getPlayer( u );
+				if ( p == null )
+					p = Bukkit.getOfflinePlayer( u );
+
+				return p;
+			}
 
 		return null;
 	}
@@ -66,7 +73,7 @@ public class Util
 
 
 
-	public static boolean removeBedFromMap( final Player player ) {
+	public static boolean removeBedFromMap( final OfflinePlayer player ) {
 		final UUID playerUid = player.getUniqueId();
 
 		if ( SpawnBed.beds.containsKey( playerUid ) )

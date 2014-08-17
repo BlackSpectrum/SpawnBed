@@ -2,6 +2,7 @@ package eu.blackspectrum.spawnbed.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -33,10 +34,10 @@ public class PlayerListener implements Listener
 	public void onEntityDamage( final EntityDamageEvent event ) {
 		if ( event.isCancelled() )
 			return;
-		
-		Entity victim = event.getEntity();
 
-		if ( !victim.getType().equals( EntityType.PLAYER ) )
+		final Entity victim = event.getEntity();
+
+		if ( victim.getType() != EntityType.PLAYER )
 			return;
 
 		for ( final MetadataValue m : victim.getMetadata( "protectionTime" ) )
@@ -59,9 +60,9 @@ public class PlayerListener implements Listener
 		if ( event.isCancelled() )
 			return;
 
-		Entity attacker = event.getDamager();
+		final Entity attacker = event.getDamager();
 
-		if ( !event.getEntity().getType().equals( EntityType.PLAYER ) || !attacker.getType().equals( EntityType.PLAYER ) )
+		if ( event.getEntity().getType() != EntityType.PLAYER || attacker.getType() != EntityType.PLAYER )
 			return;
 
 		for ( final MetadataValue m : attacker.getMetadata( "protectionTime" ) )
@@ -105,7 +106,7 @@ public class PlayerListener implements Listener
 		// Only beds are in overworld
 		if ( !clickedBlock.getWorld().equals( SpawnBed.overWorld ) )
 			return;
-		final boolean isRightClick = event.getAction().equals( Action.RIGHT_CLICK_BLOCK );
+		final boolean isRightClick = event.getAction() == Action.RIGHT_CLICK_BLOCK;
 
 		// Prevent sleeping
 		event.setCancelled( isRightClick );
@@ -114,7 +115,7 @@ public class PlayerListener implements Listener
 		final Player player = event.getPlayer();
 
 		// Check if it is already used
-		final Player owner = Util.getOwnerOfBed( bed );
+		final OfflinePlayer owner = Util.getOwnerOfBed( bed );
 
 		if ( owner != null )
 		{
@@ -130,7 +131,8 @@ public class PlayerListener implements Listener
 					player.sendMessage( ChatColor.AQUA + "No longer respawning here." );
 				}
 			else if ( isRightClick )
-				player.sendMessage( ChatColor.AQUA + "This bed is already occupied by " + owner.getDisplayName() + "." );
+				player.sendMessage( ChatColor.AQUA + "This bed is already occupied by " + ChatColor.GOLD + owner.getName() + ChatColor.AQUA
+						+ "." );
 
 			return;
 		}
